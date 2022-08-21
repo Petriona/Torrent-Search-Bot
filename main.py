@@ -9,6 +9,13 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, 
 from configs import Config
 from tool import SearchYTS, SearchAnime, Search1337x, SearchPirateBay
 
+from youtubesearchpython import *
+
+async def youtube_search(query):
+    sear = VideosSearch(query)
+    result = sear.result()['result']
+    return result
+
 TorrentBot = Client(session_name=Config.SESSION_NAME, api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN)
 DEFAULT_SEARCH_MARKUP = [
                     [InlineKeyboardButton("Search YTS", switch_inline_query_current_chat="!yts "),
