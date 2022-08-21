@@ -52,7 +52,7 @@ async def inline_handlers(bot, inline):
     search = inline.query
     answers = []
  
-    if search_ts == "":
+    if search == "":
         answers.append(
             InlineQueryResultPhoto(
                 title="Help & Usage", 
