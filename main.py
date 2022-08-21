@@ -65,7 +65,7 @@ async def inline_handlers(bot, inline):
             )
         )
     elif search.startswith("!pb"):
-        query = search_ts.split(" ", 1)[-1]
+        query = search.split(" ", 1)[-1]
         if (query == "") or (query == " "):
             answers.append(
                 InlineQueryResultArticle(
