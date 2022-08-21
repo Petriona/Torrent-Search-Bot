@@ -46,7 +46,7 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!1337x "),
+                  [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt "),
                     InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
@@ -159,7 +159,7 @@ async def inline_handlers(bot, inline):
             answers.append(
             InlineQueryResultPhoto(
                 title="YouTube Search", 
-                photo_url="https://telegra.ph/file/2330627af13181036b153.png",
+                photo_url="https://telegra.ph/file/4e1421486b323ad8a0fa3.png",
                 description="Type Something To Search On YouTube...",
                 input_message_content=InputTextMessageContent(
                             message_text=f"**YouTube Search**\n\n**Usage:** @XnWizBot !yt Your Query",
