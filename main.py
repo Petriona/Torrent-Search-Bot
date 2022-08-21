@@ -1,6 +1,5 @@
 import os
 from tool import SearchYTS
-from tool import Search1337x
 from tool import YouTubeSearch
 from tool import SearchPirateBay
 from pyrogram import Client, filters
@@ -198,6 +197,7 @@ async def inline_handlers(bot, inline):
                             thumb_url=thumb[0]['url'],
                             description=data(['duration'])
                         )
+                    )
     
     else:
         answers.append(
@@ -208,8 +208,8 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x "),
-                    InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+                  [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt "),
+                    InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
             )
