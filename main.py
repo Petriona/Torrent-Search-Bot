@@ -160,7 +160,7 @@ async def inline_handlers(bot, inline):
             answers.append(
             InlineQueryResultPhoto(
                 title="PYPI Search", 
-                photo_url="https://telegra.ph/file/4e1421486b323ad8a0fa3.png",
+                photo_url="https://telegra.ph/file/67799789f650d838f9ff4.png",
                 description="Type Something To Search On PYPI...",
                 input_message_content=InputTextMessageContent(
                             message_text=f"**PYPI Search**\n\n**Usage:** @XnWizBot !pypi Your Query",
@@ -204,7 +204,7 @@ async def inline_handlers(bot, inline):
                             [[InlineKeyboardButton("PYPI link", url=pypi['link']),
                             InlineKeyboardButton("Home Page", url=pypi['homePage'])]]
                         ),
-                        thumb_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png"
+                        thumb_url="https://telegra.ph/file/c1d005226d98a74ad1e16.png"
                     )
                 )
     else:
