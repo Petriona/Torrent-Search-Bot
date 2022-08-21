@@ -243,7 +243,7 @@ async def inline_handlers(bot, inline):
                     answers.append(
                         InlineQueryResultPhoto(
                             title=f"Wallpaper #{x}",
-                            photo_url=wh['data'][x]['thumbs']['large'],
+                            photo_url=wh['data'][x]['thumbs']['original'],
                             description=f"Views: {wh['data'][x]['views']}, Purity: {wh['data'][x]['purity']}, Category: {wh['data'][x]['category']}, Resolution: {wh['data'][x]['resolution']}",
                             reply_markup=InlineKeyboardMarkup(
                                 [[InlineKeyboardButton("Download HD", url=wh['data'][x]['path'])]]
