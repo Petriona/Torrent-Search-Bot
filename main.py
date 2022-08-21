@@ -1,5 +1,7 @@
+import os
 from tool import SearchYTS
 from tool import Search1337x
+from tool import YouTubeSearch
 from tool import SearchPirateBay
 from pyrogram import Client, filters
 from pyrogram.types import InlineQuery
@@ -8,6 +10,10 @@ from pyrogram.types import InlineKeyboardMarkup
 from pyrogram.types import InlineQueryResultPhoto
 from pyrogram.types import InputTextMessageContent
 from pyrogram.types import InlineQueryResultArticle
+
+API_ID = int(os.environ.get("API_ID"))
+API_HASH = os.environ.get("API_HASH")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 bot = Client("XnWizBot",
              api_id=API_ID,
@@ -166,5 +172,5 @@ async def inline_handlers(bot, inline):
     )
         
     
-
-TorrentBot.run()
+app = bot()
+app.run()
