@@ -1,58 +1,36 @@
-# (c) @AbirHasan2005 & Jigar Varma & Hemanta Pokharel & Akib Hridoy
-
-import asyncio
+from tool import SearchYTS
+from tool import Search1337x
+from tool import SearchPirateBay
 from pyrogram import Client, filters
-from pyrogram.errors import QueryIdInvalid, FloodWait
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, InlineQuery, InlineQueryResultArticle, \
-    InputTextMessageContent, InlineQueryResultPhoto
+from pyrogram.types import InlineQuery
+from pyrogram.types import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup
+from pyrogram.types import InlineQueryResultPhoto
+from pyrogram.types import InputTextMessageContent
+from pyrogram.types import InlineQueryResultArticle
 
-from configs import Config
-from tool import SearchYTS, SearchAnime, Search1337x, SearchPirateBay
+bot = Client("XnWizBot",
+             api_id=API_ID,
+             api_hash=API_HASH,
+             bot_token=BOT_TOKEN
+            )
 
-from youtubesearchpython import *
-
-async def youtube_search(query):
-    sear = VideosSearch(query)
-    result = sear.result()['result']
-    return result
-
-TorrentBot = Client(session_name=Config.SESSION_NAME, api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN)
-DEFAULT_SEARCH_MARKUP = [
-                    [InlineKeyboardButton("Search YTS", switch_inline_query_current_chat="!yts "),
-                     InlineKeyboardButton("Go Inline", switch_inline_query="!yts ")],
-                    [InlineKeyboardButton("Search ThePirateBay", switch_inline_query_current_chat="!pb "),
-                     InlineKeyboardButton("Go Inline", switch_inline_query="!pb ")],
-                    [InlineKeyboardButton("Search 1337x", switch_inline_query_current_chat=""),
-                     InlineKeyboardButton("Go Inline", switch_inline_query="")],
-                    [InlineKeyboardButton("Search Anime", switch_inline_query_current_chat="!a "),
-                     InlineKeyboardButton("GO Inline", switch_inline_query_current_chat="!a ")],
-                    [InlineKeyboardButton("Developer: @AbirHasan2005", url="https://t.me/AbirHasan2005")]
-                ]
-
-
-@TorrentBot.on_message(filters.command("start"))
-async def start_handler(_, message: Message):
-    try:
-        await message.reply_text(
-            text="Hello, I am Torrent Search Bot!\n"
-                 "I can search Torrent Magnetic Links from Inline.\n\n"
-                 "Made by @AbirHasan2005",
-            disable_web_page_preview=True,
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup(DEFAULT_SEARCH_MARKUP)
+@bot.on_message(filters.command("start"))
+async def start(_, message: Message):
+    
+    await message.reply(
+            text="Hello, I'm a simple Inline Bot, these are some websites where i can search. I'm not completed yet, my owner is still devoloping me.",
+            reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ",
+                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts "))]])
         )
-    except FloodWait as e:
-        print(f"[{Config.SESSION_NAME}] - Sleeping for {e.x}s")
-        await asyncio.sleep(e.x)
-        await start_handler(_, message)
-
-
-@TorrentBot.on_inline_query()
+    
+@bot.on_inline_query()
 async def inline_handlers(bot, inline):
-    search_ts = inline.query
+    
     answers = []
  
-    if search_ts == "":
+    if inline.query == "":
         answers.append(
             InlineQueryResultPhoto(
                 title="Help & Usage", 
@@ -65,8 +43,8 @@ async def inline_handlers(bot, inline):
                      InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts "))]])
             )
         )
-    elif search_ts.startswith("!pb"):
-        if len(search_ts) == 3:
+    elif inline.query.startswith("!pb"):
+        if len(inline.query) == 3:
             answers.append(
             InlineQueryResultPhoto(
                 title="PirateBay Search", 
@@ -80,7 +58,7 @@ async def inline_handlers(bot, inline):
             )
         )
         else:
-            query = search_ts.split(" ", 1)[-1]
+            query = inline.query.split(" ", 1)[-1]
             torrentList = await SearchPirateBay(query)
             if not torrentList:
                 answers.append(
@@ -115,8 +93,8 @@ async def inline_handlers(bot, inline):
                                 [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
                         )
                     )
-    elif search_ts.startswith("!yts"):
-        if len(search_ts) == 4:
+    elif inline.query.startswith("!yts"):
+        if len(inline.query) == 4:
             answers.append(
             InlineQueryResultPhoto(
                 title="YTS Search", 
@@ -130,7 +108,7 @@ async def inline_handlers(bot, inline):
             )
         )
         else:
-            query = search_ts.split(" ", 1)[-1]
+            query = inline.query.split(" ", 1)[-1]
             torrentList = await SearchYTS(query)
             if not torrentList:
                 answers.append(
