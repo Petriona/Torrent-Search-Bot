@@ -65,8 +65,6 @@ async def inline_handlers(bot, inline):
             )
         )
     elif search_ts.startswith("!pb"):
-        query = search_ts.split(" ", 1)[-1]
-        print(query)
         if len(search_ts) ==3:
             answers.append(
             InlineQueryResultPhoto(
@@ -81,25 +79,28 @@ async def inline_handlers(bot, inline):
             )
         )
         else:
+            query = search_ts.split(" ", 1)[-1]
+            print(query)
             torrentList = await SearchPirateBay(query)
             if not torrentList:
                 answers.append(
-                    InlineQueryResultArticle(
-                        title="No Torrents Found in ThePirateBay!",
-                        description=f"Can't find torrents for {query} in ThePirateBay !!",
-                        input_message_content=InputTextMessageContent(
-                            message_text=f"No Torrents Found For `{query}` in ThePirateBay !!",
-                            parse_mode="Markdown"
-                        ),
-                        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pb ")]])
-                    )
+                InlineQueryResultPhoto(
+                    title="No Results Found", 
+                    photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
+                    description=f"Sorry we couldn't found any result for your query {query}.",
+                    input_message_content=InputTextMessageContent(
+                        message_text=f"Sorry we couldn't found any result for your query {query}.",
+                    ),
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pb ")]])
                 )
+            )
             else:
                 for i in range(len(torrentList)):
                     answers.append(
                         InlineQueryResultArticle(
                             title=f"{torrentList[i]['Name']}",
-                            description=f"🟢: {torrentList[i]['Seeders']}, 🔴: {torrentList[i]['Leechers']}\n📦: {torrentList[i]['Size']}",
+                            description=f"🟢: {torrentList[i]['Seeders']}, 🔴: {torrentList[i]['Leechers']}📦: {torrentList[i]['Size']}",
                             input_message_content=InputTextMessageContent(
                                 message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
                                              f"**Name:** `{torrentList[i]['Seeders']}`\n"
@@ -108,8 +109,7 @@ async def inline_handlers(bot, inline):
                                              f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
                                              f"**Uploader:** `{torrentList[i]['Uploader']}`\n"
                                              f"**Uploaded on {torrentList[i]['Date']}**\n\n"
-                                             f"**Magnet:**\n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
-                                parse_mode="Markdown"
+                                             f"**Magnet:**\n`{torrentList[i]['Magnet']}`"
                             ),
                             reply_markup=InlineKeyboardMarkup(
                                 [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
