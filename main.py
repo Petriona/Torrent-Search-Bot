@@ -44,7 +44,7 @@ async def start_handler(_, message: Message):
 async def inline_handlers(bot, inline):
     search = inline.query
     answers = []
-    if search = "":
+    if search == "":
         answer.append(
             InlineQueryResultArticle(
                 title="Tap To View Documentation.",
@@ -56,7 +56,7 @@ async def inline_handlers(bot, inline):
             )
         )
                      
-    elif search = "!yt":
+    elif search == "!yt":
         m = search.strip()
         string = await youtube_search(m)
         for data in string:
