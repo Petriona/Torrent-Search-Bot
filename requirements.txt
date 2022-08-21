@@ -2,4 +2,3 @@ aiohttp
 TgCrypto
 requests
 Pyrogram
-youtube-search-python
