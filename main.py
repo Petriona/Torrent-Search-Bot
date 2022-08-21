@@ -113,7 +113,7 @@ async def inline_handlers(bot, inline):
                                 [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
                         )
                     )
-    """elif search_ts.startswith("!yts"):
+    elif search_ts.startswith("!yts"):
         query = search_ts.split(" ", 1)[-1]
         if (query == "") or (query == " "):
             answers.append(
@@ -276,7 +276,7 @@ async def inline_handlers(bot, inline):
             )
         except QueryIdInvalid:
             print(f"[{Config.SESSION_NAME}] - Failed to Answer Error - {inline.from_user.first_name} - Sleeping for 5s")
-            await asyncio.sleep(5)"""
+            await asyncio.sleep(5)
 
 
 TorrentBot.run()
