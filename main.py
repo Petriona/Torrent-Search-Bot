@@ -27,7 +27,8 @@ async def start(bot, message):
     await message.reply(
             text="Hello, I'm a simple Inline Bot, these are some websites where i can search. I'm not completed yet, my owner is still devoloping me.",
             reply_markup=InlineKeyboardMarkup(
-              [[InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+              [[InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x "),
+                InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
                 InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
             )
         )
@@ -46,7 +47,8 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+                  [[InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x "),
+                    InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
             )
@@ -146,31 +148,30 @@ async def inline_handlers(bot, inline):
                                              f"**Rating:** `{torrentList[i]['Rating']}`\n"
                                              f"**Duration:** `{torrentList[i]['Runtime']}`\n"
                                              f"**Released on {torrentList[i]['ReleaseDate']}**\n\n"
-                                             f"**Torrent Download Links:**\n{dl_links}\n\nPowered By @AHToolsBot",
-                                parse_mode="Markdown",
+                                             f"**Torrent Download Links:**\n{dl_links}"
                                 disable_web_page_preview=True
                             ),
                             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!yts ")]]),
                             thumb_url=torrentList[i]["Poster"]
                         )
                     )
-    elif inline.query.startswith("!pb"):
-        if len(inline.query) == 3:
+    elif inline.query.startswith("!1337x"):
+        if len(inline.query) == 6:
             answers.append(
             InlineQueryResultPhoto(
-                title="PirateBay Search", 
-                photo_url="https://telegra.ph/file/727d617ab279538ac270f.png",
-                description="Type Something To Search On PirateBay...",
+                title="1337x Search", 
+                photo_url="https://telegra.ph/file/2330627af13181036b153.png",
+                description="Type Something To Search On 1337x...",
                 input_message_content=InputTextMessageContent(
-                            message_text=f"**PirateBay Search**\n\n**Usage:** @XnWizBot !pb Your Query",
+                            message_text=f"**1337x Search**\n\n**Usage:** @XnWizBot !1337x Your Query",
                         ),
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
+                    [InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x ")]])
             )
         )
         else:
             query = inline.query.split(" ", 1)[-1]
-            torrentList = await SearchPirateBay(query)
+            torrentList = await Search1337x(query)
             if not torrentList:
                 answers.append(
                 InlineQueryResultPhoto(
@@ -181,29 +182,34 @@ async def inline_handlers(bot, inline):
                         message_text=f"No results found for your query `{query}`.",
                     ),
                     reply_markup=InlineKeyboardMarkup([
-                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pb ")]])
+                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!1337x ")]])
                 )
             )
             else:
                 for i in range(len(torrentList)):
                     answers.append(
-                        InlineQueryResultArticle(
-                            title=f"{torrentList[i]['Name']}",
-                            description=f"🟢: {torrentList[i]['Seeders']}, 🔴: {torrentList[i]['Leechers']}📦: {torrentList[i]['Size']}",
-                            input_message_content=InputTextMessageContent(
-                                message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
-                                             f"**Name:** `{torrentList[i]['Seeders']}`\n"
-                                             f"**Size:** `{torrentList[i]['Size']}`\n"
-                                             f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
-                                             f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
-                                             f"**Uploader:** `{torrentList[i]['Uploader']}`\n"
-                                             f"**Uploaded on {torrentList[i]['Date']}**\n\n"
-                                             f"**Magnet:**\n`{torrentList[i]['Magnet']}`"
-                            ),
-                            reply_markup=InlineKeyboardMarkup(
-                                [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
-                        )
+                    InlineQueryResultArticle(
+                        title=f"{torrentList[i]['Name']}",
+                        description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}, Downloads: {torrentList[i]['Downloads']}",
+                        input_message_content=InputTextMessageContent(
+                            message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
+                                         f"**Name:** `{torrentList[i]['Name']}`\n"
+                                         f"**Language:** `{torrentList[i]['Language']}`\n"
+                                         f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
+                                         f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
+                                         f"**Size:** `{torrentList[i]['Size']}`\n"
+                                         f"**Downloads:** `{torrentList[i]['Downloads']}`\n"
+                                         f"__Uploaded by {torrentList[i]['UploadedBy']}__\n"
+                                         f"__Uploaded {torrentList[i]['DateUploaded']}__\n"
+                                         f"__Last Checked {torrentList[i]['LastChecked']}__\n\n"
+                                         f"**Magnet:**\n`{torrentList[i]['Magnet']}`"
+                        ),
+                        reply_markup=InlineKeyboardMarkup(
+                            [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="")]]
+                        ),
+                        thumb_url=torrentList[i]['Poster']
                     )
+                )
     else:
         answers.append(
             InlineQueryResultPhoto(
@@ -213,7 +219,8 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+                  [[InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x "),
+                    InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
             )
