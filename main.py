@@ -4,7 +4,7 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import QueryIdInvalid, FloodWait
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, InlineQuery, InlineQueryResultArticle, \
-    InputTextMessageContent
+    InputTextMessageContent, InlineQueryResultPhoto
 
 from configs import Config
 from tool import SearchYTS, SearchAnime, Search1337x, SearchPirateBay
@@ -54,12 +54,14 @@ async def inline_handlers(bot, inline):
  
     if search_ts == "":
         answers.append(
-            InlineQueryResultArticle(
-                title="Search Something ...", 
-                description="Search For Torrents ...",
+            InlineQueryResultPhoto(
+                title="Help & Usage", 
+                thumb_url="https://telegra.ph/file/3200a2b475c84d1559746.jpg",
+                photo_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg"
+                description="Documentation of Hagadmansa Bot ⚡️",
+                caption="Hello",
                 input_message_content=InputTextMessageContent(
-                    message_text="Search for Torrents from Inline!",
-                    parse_mode="Markdown"
+                    message_text="This is Hagadmansa Bot 🤫"
                 ),
                 reply_markup=InlineKeyboardMarkup(DEFAULT_SEARCH_MARKUP)
             )
