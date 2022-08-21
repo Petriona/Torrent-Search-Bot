@@ -14,6 +14,7 @@ API_ID = int(os.environ.get("API_ID"))
 API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 PYPI_API = "https://api.safone.tech/pypi?query={}"
+WALLHAVEN_API = "https://wallhaven.cc/api/v1/search?q={}&categories=101&purity=100&apikey=JvjUbQRBuYglCzpBJtKzZpTGvJluVpwe"
 
 bot = Client("XnWizBot",
              api_id=API_ID,
@@ -207,54 +208,46 @@ async def inline_handlers(bot, inline):
                         thumb_url="https://telegra.ph/file/c1d005226d98a74ad1e16.png"
                     )
                 )
-    elif inline.query.startswith("!pb"):
+    elif inline.query.startswith("!wh"):
         if len(inline.query) == 3:
             answers.append(
             InlineQueryResultPhoto(
-                title="PirateBay Search", 
+                title="Wallhaven Search", 
                 photo_url="https://telegra.ph/file/727d617ab279538ac270f.png",
-                description="Type Something To Search On PirateBay...",
+                description="Type Something To Search On Wallhaven...",
                 input_message_content=InputTextMessageContent(
-                            message_text=f"**PirateBay Search**\n\n**Usage:** @XnWizBot !pb Your Query",
+                            message_text=f"**Wallhaven Search**\n\n**Usage:** @XnWizBot !wh Your Query",
                         ),
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
+                    [InlineKeyboardButton("Wallhaven", switch_inline_query_current_chat="!wh ")]])
             )
         )
         else:
             query = inline.query.split(" ", 1)[-1]
-            torrentList = await SearchPirateBay(query)
-            if not torrentList:
-                answers.append(
-                InlineQueryResultPhoto(
-                    title="No Results Found", 
-                    photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
-                    description=f"Sorry we couldn't found any result for your query {query}.",
-                    input_message_content=InputTextMessageContent(
-                        message_text=f"No results found for your query `{query}`.",
-                    ),
-                    reply_markup=InlineKeyboardMarkup([
-                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pb ")]])
-                )
-            )
-            else:
-                for i in range(len(torrentList)):
+            wh = requests.get(WALLHAVEN_API.format(query)).json()
+            if not wh['data']:
                     answers.append(
-                        InlineQueryResultArticle(
-                            title=f"{torrentList[i]['Name']}",
-                            description=f"🟢: {torrentList[i]['Seeders']}, 🔴: {torrentList[i]['Leechers']}📦: {torrentList[i]['Size']}",
-                            input_message_content=InputTextMessageContent(
-                                message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
-                                             f"**Name:** `{torrentList[i]['Seeders']}`\n"
-                                             f"**Size:** `{torrentList[i]['Size']}`\n"
-                                             f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
-                                             f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
-                                             f"**Uploader:** `{torrentList[i]['Uploader']}`\n"
-                                             f"**Uploaded on {torrentList[i]['Date']}**\n\n"
-                                             f"**Magnet:**\n`{torrentList[i]['Magnet']}`"
-                            ),
+                    InlineQueryResultPhoto(
+                        title="No Results Found", 
+                        photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
+                        description=f"Sorry we couldn't found any result for your query {query}.",
+                        input_message_content=InputTextMessageContent(
+                            message_text=f"No results found for your query `{query}`.",  
+                        ),
+                        reply_markup=InlineKeyboardMarkup([
+                            [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!wh ")]])
+                    )
+                )
+            else:
+                for x in range(len(wh['data']))
+                    answers.append(
+                        InlineQueryResultPhoto(
+                            title=f"Wallpaper #{x}",
+                            photo_url=wh['data'][x]['thumbs']['large'],
+                            description=f"Views: {wh['data'][x]['views']}, Purity: {wh['data'][x]['purity']}, Category: {wh['data'][x]['category']}, Resolution: {wh['data'][x]['resolution']}",
                             reply_markup=InlineKeyboardMarkup(
-                                [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
+                                [[InlineKeyboardButton("Download HD", url=wh['data'][x]['path'])]]
+                            )
                         )
                     )
     else:
