@@ -49,10 +49,10 @@ async def start_handler(_, message: Message):
 
 @TorrentBot.on_inline_query()
 async def inline_handlers(bot, inline):
-    search = inline.query
+    search_ts = inline.query
     answers = []
  
-    if search == "":
+    if search_ts == "":
         answers.append(
             InlineQueryResultPhoto(
                 title="Help & Usage", 
@@ -64,8 +64,8 @@ async def inline_handlers(bot, inline):
                     [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
             )
         )
-    elif search.startswith("!pb"):
-        query = search.split(" ", 1)[-1]
+    elif search_ts.startswith("!pb"):
+        query = search_ts.split(" ", 1)[-1]
         if (query == "") or (query == " "):
             answers.append(
                 InlineQueryResultArticle(
