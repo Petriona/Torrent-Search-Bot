@@ -27,8 +27,8 @@ async def start(bot, message):
     await message.reply(
             text="Hello, I'm a simple Inline Bot, these are some websites where i can search. I'm not completed yet, my owner is still devoloping me.",
             reply_markup=InlineKeyboardMarkup(
-              [[InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x "),
-                InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+              [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt "),
+                InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                 InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
             )
         )
@@ -47,8 +47,8 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x "),
-                    InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+                  [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!1337x "),
+                    InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
             )
@@ -155,24 +155,24 @@ async def inline_handlers(bot, inline):
                             thumb_url=torrentList[i]["Poster"]
                         )
                     )
-    elif inline.query.startswith("!1337x"):
-        if len(inline.query) == 6:
+    elif inline.query.startswith("!yt"):
+        if len(inline.query) == 3:
             answers.append(
             InlineQueryResultPhoto(
-                title="1337x Search", 
+                title="YouTube Search", 
                 photo_url="https://telegra.ph/file/2330627af13181036b153.png",
-                description="Type Something To Search On 1337x...",
+                description="Type Something To Search On YouTube...",
                 input_message_content=InputTextMessageContent(
-                            message_text=f"**1337x Search**\n\n**Usage:** @XnWizBot !1337x Your Query",
+                            message_text=f"**YouTube Search**\n\n**Usage:** @XnWizBot !yt Your Query",
                         ),
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("1337x", switch_inline_query_current_chat="!1337x ")]])
+                    [InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt ")]])
             )
         )
         else:
             query = inline.query.split(" ", 1)[-1]
-            torrentList = await Search1337x(query)
-            if not torrentList:
+            string = await YouTubeSearch(query)
+            if not string:
                 answers.append(
                 InlineQueryResultPhoto(
                     title="No Results Found", 
@@ -182,34 +182,23 @@ async def inline_handlers(bot, inline):
                         message_text=f"No results found for your query `{query}`.",
                     ),
                     reply_markup=InlineKeyboardMarkup([
-                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!1337x ")]])
+                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!yt ")]])
                 )
             )
             else:
-                for i in range(len(torrentList)):
+                for data in string:
+                    count = data['viewCount']
+                    thumb = data['thumbnails']
                     answers.append(
-                    InlineQueryResultArticle(
-                        title=f"{torrentList[i]['Name']}",
-                        description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}, Downloads: {torrentList[i]['Downloads']}",
-                        input_message_content=InputTextMessageContent(
-                            message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
-                                         f"**Name:** `{torrentList[i]['Name']}`\n"
-                                         f"**Language:** `{torrentList[i]['Language']}`\n"
-                                         f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
-                                         f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
-                                         f"**Size:** `{torrentList[i]['Size']}`\n"
-                                         f"**Downloads:** `{torrentList[i]['Downloads']}`\n"
-                                         f"__Uploaded by {torrentList[i]['UploadedBy']}__\n"
-                                         f"__Uploaded {torrentList[i]['DateUploaded']}__\n"
-                                         f"__Last Checked {torrentList[i]['LastChecked']}__\n\n"
-                                         f"**Magnet:**\n`{torrentList[i]['Magnet']}`"
-                        ),
-                        reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="")]]
-                        ),
-                        thumb_url=torrentList[i]['Poster']
-                    )
-                )
+                        InlineQueryResultArticle(
+                            title=data['title'][:50] + "..",
+                            input_message_content=InputTextMessageContent(
+                                message_text=data['link']
+                            )
+                            thumb_url=thumb[0]['url'],
+                            description=data(['duration'])
+                        )
+    
     else:
         answers.append(
             InlineQueryResultPhoto(
