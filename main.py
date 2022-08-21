@@ -22,7 +22,7 @@ bot = Client("XnWizBot",
             )
 
 @bot.on_message(filters.command("start"))
-async def start(_, message: Message):
+async def start(bot, message):
     
     await message.reply(
             text="Hello, I'm a simple Inline Bot, these are some websites where i can search. I'm not completed yet, my owner is still devoloping me.",
