@@ -56,7 +56,7 @@ async def inline_handlers(bot, inline):
         answers.append(
             InlineQueryResultPhoto(
                 title="Help & Usage", 
-                photo_url="https://telegra.ph/file/3200a2b475c84d1559746.jpg",
+                photo_url="https://telegra.ph/file/358af58083cc9bc616221.jpg",
                 description="Documentation of Hagadmansa Bot ⚡️",
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
@@ -70,7 +70,7 @@ async def inline_handlers(bot, inline):
             InlineQueryResultPhoto(
                 title="PirateBay Search", 
                 photo_url="https://telegra.ph/file/727d617ab279538ac270f.png",
-                description="@XnWizBot !pb Your Query",
+                description="Type Something To Search On PirateBay...",
                 input_message_content=InputTextMessageContent(
                             message_text=f"**PirateBay Search**\n\n**Usage:** @XnWizBot !pb Your Query",
                         ),
@@ -89,7 +89,7 @@ async def inline_handlers(bot, inline):
                     photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
                     description=f"Sorry we couldn't found any result for your query {query}.",
                     input_message_content=InputTextMessageContent(
-                        message_text=f"Sorry we couldn't found any result for your query {query}.",
+                        message_text=f"No results found for your query `{query}`.",
                     ),
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pb ")]])
