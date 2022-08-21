@@ -49,22 +49,22 @@ async def start_handler(_, message: Message):
 
 @TorrentBot.on_inline_query()
 async def inline_handlers(bot, inline):
-    search_ts = inline.query
+    search = inline.query
     answers = []
  
     if search_ts == "":
         answers.append(
             InlineQueryResultPhoto(
                 title="Help & Usage", 
-                thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 photo_url="https://telegra.ph/file/3200a2b475c84d1559746.jpg",
                 description="Documentation of Hagadmansa Bot ⚡️",
                 caption="Documentation of Hagadmansa Bot ⚡️",
+                thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
             )
         )
-    elif search_ts.startswith("!pb"):
+    elif search.startswith("!pb"):
         query = search_ts.split(" ", 1)[-1]
         if (query == "") or (query == " "):
             answers.append(
@@ -97,7 +97,7 @@ async def inline_handlers(bot, inline):
                     answers.append(
                         InlineQueryResultArticle(
                             title=f"{torrentList[i]['Name']}",
-                            description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}",
+                            description=f"🟢: {torrentList[i]['Seeders']}, 🔴: {torrentList[i]['Leechers']}\n📦: {torrentList[i]['Size']}",
                             input_message_content=InputTextMessageContent(
                                 message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
                                              f"**Name:** `{torrentList[i]['Seeders']}`\n"
@@ -113,7 +113,7 @@ async def inline_handlers(bot, inline):
                                 [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
                         )
                     )
-    elif search_ts.startswith("!yts"):
+    """elif search_ts.startswith("!yts"):
         query = search_ts.split(" ", 1)[-1]
         if (query == "") or (query == " "):
             answers.append(
@@ -276,7 +276,7 @@ async def inline_handlers(bot, inline):
             )
         except QueryIdInvalid:
             print(f"[{Config.SESSION_NAME}] - Failed to Answer Error - {inline.from_user.first_name} - Sleeping for 5s")
-            await asyncio.sleep(5)
+            await asyncio.sleep(5)"""
 
 
 TorrentBot.run()
