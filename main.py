@@ -50,7 +50,7 @@ async def start_handler(_, message: Message):
 @TorrentBot.on_inline_query()
 async def inline_handlers(bot, inline):
     search = inline.query
-    answers = []
+    answer = []
     if search == "":
         answer.append(
             InlineQueryResultArticle(
@@ -69,7 +69,7 @@ async def inline_handlers(bot, inline):
         for data in string:
          count = data['viewCount']
          thumb = data['thumbnails']
-         results.append(
+         answer.append(
             InlineQueryResultArticle(
                 title=data['title'][:35] + "..",
                 input_message_content=InputTextMessageContent(
