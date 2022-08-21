@@ -1,6 +1,5 @@
 import os
 from tool import SearchYTS
-from tool import YouTubeSearch
 from tool import SearchPirateBay
 from pyrogram import Client, filters
 from pyrogram.types import InlineQuery
