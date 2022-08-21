@@ -192,15 +192,13 @@ async def inline_handlers(bot, inline):
                         title=pypi['title'],
                         description=pypi['description'],
                         input_message_content=InputTextMessageContent(
-                            message_text=f"""**{pypi['title']} {pypi['version']}**
-                            
-                            **Author:** {pypi['author']}
-                            **Email:** {pypi['authorEmail']}
-                            **Bug Track Url** {pypi['bugtrackUrl']}
-                            **Docs Url:** {pypi['docsUrl']}
-                            **License:** {pypi['license']}
-                            
-                            **Description:** {pypi['description']}"""
+                            message_text=f"**{pypi['title']} {pypi['version']}**\n"
+                                         f"**Author:** {pypi['author']}"
+                                         f"**Email:** {pypi['authorEmail']}"
+                                         f"**Bug Track Url** {pypi['bugtrackUrl']}"
+                                         f"**Docs Url:** {pypi['docsUrl']}"
+                                         f"**License:** {pypi['license']}\n"
+                                         f"**Description:** {pypi['description']}"
                         ),
                         reply_markup=InlineKeyboardMarkup(
                             [[InlineKeyboardButton("PYPI link", url=pypi['link']),
