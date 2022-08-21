@@ -65,7 +65,7 @@ async def inline_handlers(bot, inline):
             )
         )
     elif search_ts.startswith("!pb"):
-        if len(search_ts) ==3:
+        if len(search_ts) == 3:
             answers.append(
             InlineQueryResultPhoto(
                 title="PirateBay Search", 
@@ -80,7 +80,6 @@ async def inline_handlers(bot, inline):
         )
         else:
             query = search_ts.split(" ", 1)[-1]
-            print(query)
             torrentList = await SearchPirateBay(query)
             if not torrentList:
                 answers.append(
@@ -116,35 +115,35 @@ async def inline_handlers(bot, inline):
                         )
                     )
     elif search_ts.startswith("!yts"):
-        query = search_ts.split(" ", 1)[-1]
-        if (query == "") or (query == " "):
+        if len(search_ts) == 4:
             answers.append(
-                InlineQueryResultArticle(
-                    title="!yts [text]",
-                    description="Search For Torrent in YTS ...",
-                    input_message_content=InputTextMessageContent(
-                        message_text="`!yts [text]`\n\nSearch YTS Torrents from Inline!",
-                        parse_mode="Markdown"
-                    ),
-                    reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!yts ")]])
-                )
+            InlineQueryResultPhoto(
+                title="YTS Search", 
+                photo_url="https://telegra.ph/file/08243a764a30b934d1da9.png",
+                description="Type Something To Search On YTS...",
+                input_message_content=InputTextMessageContent(
+                            message_text=f"**YTS Search**\n\n**Usage:** @XnWizBot !yts Your Query",
+                        ),
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("YTS", switch_inline_query_current_chat="!pb ")]])
             )
+        )
         else:
+            query = search_ts.split(" ", 1)[-1]
             torrentList = await SearchYTS(query)
             if not torrentList:
                 answers.append(
-                    InlineQueryResultArticle(
-                        title="No Torrents Found!",
-                        description=f"Can't find YTS torrents for {query} !!",
-                        input_message_content=InputTextMessageContent(
-                            message_text=f"No YTS Torrents Found For `{query}`",
-                            parse_mode="Markdown"
-                        ),
-                        reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!yts ")]])
-                    )
+                InlineQueryResultPhoto(
+                    title="No Results Found", 
+                    photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
+                    description=f"Sorry we couldn't found any result for your query {query}.",
+                    input_message_content=InputTextMessageContent(
+                        message_text=f"No results found for your query `{query}`.",
+                    ),
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!yts ")]])
                 )
+            )
             else:
                 for i in range(len(torrentList)):
                     dl_links = "- " + "\n\n- ".join(torrentList[i]['Downloads'])
