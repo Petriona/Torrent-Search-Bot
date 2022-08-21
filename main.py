@@ -65,21 +65,21 @@ async def inline_handlers(bot, inline):
             )
         )
     elif search_ts.startswith("!pb"):
-        print(len(search_ts))
         query = search_ts.split(" ", 1)[-1]
-        if (query == "") or (query == " "):
-            print(len(query))
+        print(query)
+        if len(search_ts) ==3:
             answers.append(
-                InlineQueryResultArticle(
-                    title="!pb [text]",
-                    description="Search For Torrent in ThePirateBay ...",
-                    input_message_content=InputTextMessageContent(
-                        message_text="`!pb [text]`\n\nSearch ThePirateBay Torrents from Inline!",
-                        parse_mode="Markdown"
-                    ),
-                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
-                )
+            InlineQueryResultPhoto(
+                title="PirateBay Search", 
+                photo_url="https://telegra.ph/file/727d617ab279538ac270f.png",
+                description="@XnWizBot !pb Your Query",
+                input_message_content=InputTextMessageContent(
+                            message_text=f"**PirateBay Search**\n\n**Usage:** @XnWizBot !pb Your Query",
+                        ),
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
             )
+        )
         else:
             torrentList = await SearchPirateBay(query)
             if not torrentList:
