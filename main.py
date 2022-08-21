@@ -56,11 +56,12 @@ async def inline_handlers(bot, inline):
         answers.append(
             InlineQueryResultPhoto(
                 title="Help & Usage", 
-                thumb_url="https://telegra.ph/file/3200a2b475c84d1559746.jpg",
+                thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 photo_url="https://telegra.ph/file/3200a2b475c84d1559746.jpg",
                 description="Documentation of Hagadmansa Bot ⚡️",
-                caption="Hello",
-                reply_markup=InlineKeyboardMarkup(DEFAULT_SEARCH_MARKUP)
+                caption="Documentation of Hagadmansa Bot ⚡️",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
             )
         )
     elif search_ts.startswith("!pb"):
