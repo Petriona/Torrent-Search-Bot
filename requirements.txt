@@ -1,5 +1,5 @@
-Pyrogram==1.4.16
-TgCrypto
 aiohttp
+TgCrypto
 requests
+Pyrogram
 youtube-search-python
