@@ -1,15 +1,9 @@
 import aiohttp
-import requests
 from requests.utils import requote_uri
 
 API_1337x = "https://api.abir-hasan.tk/1337x?query={}&limit={}"
 API_YTS = "https://api.abir-hasan.tk/yts?query={}&limit={}"
 API_PIRATEBAY = "https://api.abir-hasan.tk/piratebay?query={}&limit={}"
-API_YOUTUBE = "https://api.abir-hasan.tk/youtube?query={}"
-
-def YouTubeSearch(query):
- data = requests.get(API_YOUTUBE.format(query)).json()
- return data
 
 async def Search1337x(query: str):
     async with aiohttp.ClientSession() as session:
