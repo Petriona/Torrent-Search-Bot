@@ -171,7 +171,7 @@ async def inline_handlers(bot, inline):
         )
         else:
             query = inline.query.split(" ", 1)[-1]
-            pypi = await requests.get(PYPI_API.format(query).json()
+            pypi = await requests.get(PYPI_API.format(query)).json()
             try:
                if pypi['error']:
                  answers.append(
