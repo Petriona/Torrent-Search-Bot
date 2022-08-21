@@ -1,5 +1,4 @@
 import aiohttp
-from configs import Config
 from requests.utils import requote_uri
 from youtubepythonsearch import VideosSearch
 
