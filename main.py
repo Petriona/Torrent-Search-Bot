@@ -192,18 +192,19 @@ async def inline_handlers(bot, inline):
                         title=pypi['title'],
                         description=pypi['description'],
                         input_message_content=InputTextMessageContent(
-                            message_text=f"**{pypi['title']} {pypi['version']}**\n"
-                                         f"**Author:** {pypi['author']}"
-                                         f"**Email:** {pypi['authorEmail']}"
-                                         f"**Bug Track Url** {pypi['bugtrackUrl']}"
-                                         f"**Docs Url:** {pypi['docsUrl']}"
-                                         f"**License:** {pypi['license']}\n"
+                            message_text=f"**{pypi['title']} {pypi['version']}**\n\n"
+                                         f"**Author:** {pypi['author']}\n"
+                                         f"**Email:** {pypi['authorEmail']}\n"
+                                         f"**Bug Track Url** {pypi['bugtrackUrl']}\n"
+                                         f"**Docs Url:** {pypi['docsUrl']}\n"
+                                         f"**License:** {pypi['license']}\n\n"
                                          f"**Description:** {pypi['description']}"
                         ),
                         reply_markup=InlineKeyboardMarkup(
                             [[InlineKeyboardButton("PYPI link", url=pypi['link']),
                             InlineKeyboardButton("Home Page", url=pypi['homePage'])]]
-                        )
+                        ),
+                        thumb_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png"
                     )
                 )
     else:
