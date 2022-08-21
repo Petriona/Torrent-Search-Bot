@@ -204,7 +204,7 @@ async def inline_handlers(bot, inline):
                         ),
                         reply_markup=InlineKeyboardMarkup(
                             [[InlineKeyboardButton("PYPI link", url=pypi['link']),
-                            InlineKeyboardButton("Home Page", url=pypi['Page'])]]
+                            InlineKeyboardButton("Home Page", url=pypi['homePage'])]]
                         )
                     )
                 )
