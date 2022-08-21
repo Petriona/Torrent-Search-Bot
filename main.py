@@ -49,9 +49,9 @@ async def start_handler(_, message: Message):
 
 @TorrentBot.on_inline_query()
 async def inline_handlers(bot, inline):
-    search = inline.query
-    answer = []
-    if search == "":
+    search_ts = inline.query
+    answers = []
+  """  if search == "":
         answer.append(
             InlineQueryResultArticle(
                 title="Tap To View Documentation.",
@@ -78,8 +78,8 @@ async def inline_handlers(bot, inline):
                 thumb_url=thumb[0]['url'], 
                 description=(data['duration'], count['text'])
             )
-        )
-    """if search_ts == "":
+        )"""
+    if search_ts == "":
         answers.append(
             InlineQueryResultArticle(
                 title="Search Something ...",
@@ -303,7 +303,7 @@ async def inline_handlers(bot, inline):
             )
         except QueryIdInvalid:
             print(f"[{Config.SESSION_NAME}] - Failed to Answer Error - {inline.from_user.first_name} - Sleeping for 5s")
-            await asyncio.sleep(5)"""
+            await asyncio.sleep(5)
 
 
 TorrentBot.run()
