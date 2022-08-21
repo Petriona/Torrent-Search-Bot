@@ -82,7 +82,7 @@ async def inline_handlers(bot, inline):
     if search_ts == "":
         answers.append(
             InlineQueryResultArticle(
-                title="Search Something ...",
+                title="Search Something ...", 
                 description="Search For Torrents ...",
                 input_message_content=InputTextMessageContent(
                     message_text="Search for Torrents from Inline!",
