@@ -191,7 +191,7 @@ async def inline_handlers(bot, inline):
                     InlineQueryResultArticle(
                         title=pypi['title'],
                         description=pypi['description'],
-                        inpup_message_content=InputTextMessageContent(
+                        input_message_content=InputTextMessageContent(
                             message_text=f"""**{pypi['title']} {pypi['version']}**
                             
                             **Author:** {pypi['author']}
