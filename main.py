@@ -13,6 +13,7 @@ from pyrogram.types import InlineQueryResultArticle
 API_ID = int(os.environ.get("API_ID"))
 API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
+PYPI_API = "https://api.safone.tech/pypi?query={}"
 
 bot = Client("XnWizBot",
              api_id=API_ID,
@@ -26,7 +27,7 @@ async def start(bot, message):
     await message.reply(
             text="Hello, I'm a simple Inline Bot, these are some websites where i can search. I'm not completed yet, my owner is still devoloping me.",
             reply_markup=InlineKeyboardMarkup(
-              [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt "),
+              [[InlineKeyboardButton("PYPI", switch_inline_query_current_chat="!pypi "),
                 InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                 InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
             )
@@ -46,7 +47,7 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt "),
+                  [[InlineKeyboardButton("PYPI", switch_inline_query_current_chat="!pypi "),
                     InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
@@ -154,26 +155,27 @@ async def inline_handlers(bot, inline):
                             thumb_url=torrentList[i]["Poster"]
                         )
                     )
-    elif inline.query.startswith("!yt"):
-        if len(inline.query) == 3:
+    elif inline.query.startswith("!pypi"):
+        if len(inline.query) == 5:
             answers.append(
             InlineQueryResultPhoto(
-                title="YouTube Search", 
+                title="PYPI Search", 
                 photo_url="https://telegra.ph/file/4e1421486b323ad8a0fa3.png",
-                description="Type Something To Search On YouTube...",
+                description="Type Something To Search On PYPI...",
                 input_message_content=InputTextMessageContent(
-                            message_text=f"**YouTube Search**\n\n**Usage:** @XnWizBot !yt Your Query",
+                            message_text=f"**PYPI Search**\n\n**Usage:** @XnWizBot !pypi Your Query",
                         ),
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt ")]])
+                    [InlineKeyboardButton("PYPI", switch_inline_query_current_chat="!pypi ")]])
             )
         )
         else:
             query = inline.query.split(" ", 1)[-1]
-            string = await YouTubeSearch(query)
-            if not string:
-                answers.append(
-                InlineQueryResultPhoto(
+            pypi = await requests.get(PYPI_API.format(query).json()
+            try:
+               if pypi['error']:
+                 answers.append(
+                 InlineQueryResultPhoto(
                     title="No Results Found", 
                     photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
                     description=f"Sorry we couldn't found any result for your query {query}.",
@@ -181,24 +183,31 @@ async def inline_handlers(bot, inline):
                         message_text=f"No results found for your query `{query}`.",
                     ),
                     reply_markup=InlineKeyboardMarkup([
-                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!yt ")]])
+                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pypi ")]])
                 )
             )
-            else:
-                for data in string:
-                    count = data['viewCount']
-                    thumb = data['thumbnails']
-                    answers.append(
-                        InlineQueryResultArticle(
-                            title=data['title'][:50] + "..",
-                            input_message_content=InputTextMessageContent(
-                                message_text=data['link']
-                            ),
-                            thumb_url=thumb[0]['url'],
-                            description=data(['duration'])
+            except:
+                answers.append(
+                    InlineQueryResultArticle(
+                        title=pypi['title'],
+                        description=pypi['description']
+                        inpup_message_content=InputTextMessageContent(
+                            message_text=f"""**{pypi['title']} {pypi['version']}**
+                            
+                            **Author:** {pypi['author']}
+                            **Email:** {pypi['authorEmail']}
+                            **Bug Track Url** {pypi['bugtrackUrl']}
+                            **Docs Url:** {pypi['docsUrl']}
+                            **License:** {pypi['license']}
+                            
+                            **Description:** {pypi['description']}"""
+                        ),
+                        reply_markup=InlineKeyboardMarkup(
+                            [[InlineKeyboardButton("PYPI link", url=pypi['link']),
+                            InlineKeyboardButton("Home Page", url=pypi['Page'])]]
                         )
                     )
-    
+                )
     else:
         answers.append(
             InlineQueryResultPhoto(
@@ -208,7 +217,7 @@ async def inline_handlers(bot, inline):
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
                 reply_markup=InlineKeyboardMarkup(
-                  [[InlineKeyboardButton("YouTube", switch_inline_query_current_chat="!yt "),
+                  [[InlineKeyboardButton("PYPI", switch_inline_query_current_chat="!pypi "),
                     InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")],[
                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
                 )
