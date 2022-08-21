@@ -162,9 +162,10 @@ async def inline_handlers(bot, inline):
                 description="Documentation of Hagadmansa Bot ⚡️",
                 caption="Documentation of Hagadmansa Bot ⚡️",
                 thumb_url="https://telegra.ph/file/8c4c3ccf01f31538f6df9.jpg",
-                reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ",
-                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts "))]])
+                reply_markup=InlineKeyboardMarkup(
+                  [[InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+                    InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
+                )
             )
         )
     
