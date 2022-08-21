@@ -175,5 +175,4 @@ async def inline_handlers(bot, inline):
     )
         
     
-app = bot()
-app.run()
+bot.run()
