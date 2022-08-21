@@ -193,7 +193,7 @@ async def inline_handlers(bot, inline):
                             title=data['title'][:50] + "..",
                             input_message_content=InputTextMessageContent(
                                 message_text=data['link']
-                            )
+                            ),
                             thumb_url=thumb[0]['url'],
                             description=data(['duration'])
                         )
