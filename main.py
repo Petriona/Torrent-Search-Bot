@@ -190,7 +190,7 @@ async def inline_handlers(bot, inline):
                 answers.append(
                     InlineQueryResultArticle(
                         title=pypi['title'],
-                        description=pypi['description']
+                        description=pypi['description'],
                         inpup_message_content=InputTextMessageContent(
                             message_text=f"""**{pypi['title']} {pypi['version']}**
                             
