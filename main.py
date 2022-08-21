@@ -26,9 +26,10 @@ async def start(bot, message):
     
     await message.reply(
             text="Hello, I'm a simple Inline Bot, these are some websites where i can search. I'm not completed yet, my owner is still devoloping me.",
-            reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ",
-                     InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts "))]])
+            reply_markup=InlineKeyboardMarkup(
+              [[InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb "),
+                InlineKeyboardButton("YTS", switch_inline_query_current_chat="!yts ")]]
+            )
         )
     
 @bot.on_inline_query()
