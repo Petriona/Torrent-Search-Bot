@@ -1,6 +1,6 @@
 import aiohttp
 from requests.utils import requote_uri
-from youtubepythonsearch import VideosSearch
+from youtubesearchpython import VideosSearch
 
 API_1337x = "https://api.abir-hasan.tk/1337x?query={}&limit={}"
 API_YTS = "https://api.abir-hasan.tk/yts?query={}&limit={}"
