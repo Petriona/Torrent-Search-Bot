@@ -41,10 +41,38 @@ async def start_handler(_, message: Message):
 
 
 @TorrentBot.on_inline_query()
-async def inline_handlers(_, inline: InlineQuery):
-    search_ts = inline.query
+async def inline_handlers(bot, inline):
+    search = inline.query
     answers = []
-    if search_ts == "":
+    if search = "":
+        answer.append(
+            InlineQueryResultArticle(
+                title="Tap To View Documentation.",
+                description="If you don't know how to use this bot, click me to open a detaild documentation.",
+                input_message_content=InputTextMessageContent(
+                    message_text="Click button below to search on YouTube."
+                ),
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Search YouTube", switch_inline_query_current_chat="!yt ")]])
+            )
+        )
+                     
+    elif search = "!yt":
+        m = search.strip()
+        string = await youtube_search(m)
+        for data in string:
+         count = data['viewCount']
+         thumb = data['thumbnails']
+         results.append(
+            InlineQueryResultArticle(
+                title=data['title'][:35] + "..",
+                input_message_content=InputTextMessageContent(
+                    message_text=data['link']
+                ),
+                thumb_url=thumb[0]['url'], 
+                description=(data['duration'], count['text'])
+            )
+        )
+    """if search_ts == "":
         answers.append(
             InlineQueryResultArticle(
                 title="Search Something ...",
@@ -268,7 +296,7 @@ async def inline_handlers(_, inline: InlineQuery):
             )
         except QueryIdInvalid:
             print(f"[{Config.SESSION_NAME}] - Failed to Answer Error - {inline.from_user.first_name} - Sleeping for 5s")
-            await asyncio.sleep(5)
+            await asyncio.sleep(5)"""
 
 
 TorrentBot.run()
