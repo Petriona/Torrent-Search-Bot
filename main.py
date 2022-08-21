@@ -154,6 +154,56 @@ async def inline_handlers(bot, inline):
                             thumb_url=torrentList[i]["Poster"]
                         )
                     )
+    elif inline.query.startswith("!pb"):
+        if len(inline.query) == 3:
+            answers.append(
+            InlineQueryResultPhoto(
+                title="PirateBay Search", 
+                photo_url="https://telegra.ph/file/727d617ab279538ac270f.png",
+                description="Type Something To Search On PirateBay...",
+                input_message_content=InputTextMessageContent(
+                            message_text=f"**PirateBay Search**\n\n**Usage:** @XnWizBot !pb Your Query",
+                        ),
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("PirateBay", switch_inline_query_current_chat="!pb ")]])
+            )
+        )
+        else:
+            query = inline.query.split(" ", 1)[-1]
+            torrentList = await SearchPirateBay(query)
+            if not torrentList:
+                answers.append(
+                InlineQueryResultPhoto(
+                    title="No Results Found", 
+                    photo_url="https://telegra.ph/file/d9c9321593231c8fc72a0.png",
+                    description=f"Sorry we couldn't found any result for your query {query}.",
+                    input_message_content=InputTextMessageContent(
+                        message_text=f"No results found for your query `{query}`.",
+                    ),
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("Try Again", switch_inline_query_current_chat="!pb ")]])
+                )
+            )
+            else:
+                for i in range(len(torrentList)):
+                    answers.append(
+                        InlineQueryResultArticle(
+                            title=f"{torrentList[i]['Name']}",
+                            description=f"🟢: {torrentList[i]['Seeders']}, 🔴: {torrentList[i]['Leechers']}📦: {torrentList[i]['Size']}",
+                            input_message_content=InputTextMessageContent(
+                                message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
+                                             f"**Name:** `{torrentList[i]['Seeders']}`\n"
+                                             f"**Size:** `{torrentList[i]['Size']}`\n"
+                                             f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
+                                             f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
+                                             f"**Uploader:** `{torrentList[i]['Uploader']}`\n"
+                                             f"**Uploaded on {torrentList[i]['Date']}**\n\n"
+                                             f"**Magnet:**\n`{torrentList[i]['Magnet']}`"
+                            ),
+                            reply_markup=InlineKeyboardMarkup(
+                                [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
+                        )
+                    )
     else:
         answers.append(
             InlineQueryResultPhoto(
