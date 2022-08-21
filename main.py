@@ -239,7 +239,7 @@ async def inline_handlers(bot, inline):
                     )
                 )
             else:
-                for x in range(len(wh['data']))
+                for x in range(len(wh['data'])):
                     answers.append(
                         InlineQueryResultPhoto(
                             title=f"Wallpaper #{x}",
