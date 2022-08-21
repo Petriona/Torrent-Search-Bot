@@ -148,7 +148,7 @@ async def inline_handlers(bot, inline):
                                              f"**Rating:** `{torrentList[i]['Rating']}`\n"
                                              f"**Duration:** `{torrentList[i]['Runtime']}`\n"
                                              f"**Released on {torrentList[i]['ReleaseDate']}**\n\n"
-                                             f"**Torrent Download Links:**\n{dl_links}"
+                                             f"**Torrent Download Links:**\n{dl_links}",
                                 disable_web_page_preview=True
                             ),
                             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!yts ")]]),
