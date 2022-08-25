@@ -1,1 +1,1 @@
-# XnWizBot 😈
+# Petriona 😈
